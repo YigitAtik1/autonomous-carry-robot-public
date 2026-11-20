@@ -1,117 +1,59 @@
-﻿# Autonomous Carry Robot
+# Autonomous Carry Robot
 
-**Autonomous Mobile Robotics | Localization | Path Planning | Embedded Control**
+**Robotics Systems Engineering | Embedded C/C++ | Python / OpenCV | MATLAB | Electronics**
 
-A university senior design project developed at MEF University in 2021, focused on autonomous navigation, obstacle detection, localization, and motion control.
+**MEF University Senior Design Project (2021)** — Yiğit Atik and Ziya Oğuzhan Çevik; advisor Dr. Yusuf Aydın.
 
-This repository preserves the original academic work and serves as a foundation for future robotics software development.
+A documented autonomous mobile-robot research and prototype project covering **electronic hardware integration, grid-based embedded navigation, motor control, camera-based ArUco localization, and MATLAB planning/mapping simulations**. This repository preserves thesis-derived source code and original evidence while keeping historical experiments distinct from future modernization work.
 
-## Project Overview
+> **Evidence-first archive:** The physical prototype and the MATLAB simulations are separate parts of the 2021 project. Archived source files were transcribed from thesis appendices and have **not** been fully recompiled or validated in the present environment. Python/ROS 2 modernization is planned, not completed.
 
-The Autonomous Carry Robot project investigated and implemented core components of an autonomous mobile robotic system.
+## Engineering subsystems
 
-The project combined:
+| Area | Implementation / evidence | Technical walkthrough |
+|---|---|---|
+| System architecture | Prototype and simulation boundaries | [Architecture](docs/architecture/README.md) |
+| Known-map planning | MATLAB `occupancyMap`, PRM, Pure Pursuit, differential drive | [Known Map](docs/matlab-simulations/known-map/README.md) |
+| LiDAR SLAM simulation | MATLAB `lidarSLAM`, scan integration, loop closure | [LiDAR SLAM](docs/matlab-simulations/lidar-slam/README.md) |
+| Camera calibration | OpenCV chessboard calibration | [Calibration](docs/localization/camera-calibration/README.md) |
+| ArUco marker tracking | OpenCV marker detection and pose estimation | [ArUco Tracking](docs/localization/aruco-tracking/README.md) |
+| Relative pose | Coordinate transformations, `composeRT` | [Relative Pose](docs/localization/relative-pose/README.md) |
+| Adaptive Wavefront | Arduino/C++ 10×10 grid, neighbor evaluation | [Navigation](docs/embedded-control/adaptive-wavefront/README.md) |
+| Motor control | 8 headings, 45° timed rotations, DC motors | [Motor Control](docs/embedded-control/motor-control/README.md) |
+| Electronic components | Arduino, sonar, motor driver, DC motors | [Component Selection](docs/hardware/component-selection/README.md) |
+| Circuit schematic | Thesis Appendix 3 schematic; Proteus source unverified | [Circuit / Proteus Evidence](docs/hardware/proteus-simulation/README.md) |
+| Physical prototype | Robot build and demonstration images | [Physical Integration](docs/hardware/physical-integration/README.md) |
+| Cross-subsystem limitations | Documented integration boundaries | [System Integration](docs/system-integration/README.md) |
 
-- Arduino-based motor control
-- Ultrasonic obstacle detection
-- Adaptive Wavefront path planning
-- Camera-based localization using ArUco markers and OpenCV
-- MATLAB simulations for path planning and LiDAR SLAM
+## Selected original evidence
 
-The physical prototype and the MATLAB simulations represent different stages of the original research.
+![Original circuit schematic](docs/assets/figures/hardware-schematic.png)
 
-## System Architecture
+*Hardware schematic from thesis Appendix 3 (PDF page 81). The diagram labels an L293D driver; the original Proteus project file has not been verified.*
 
-The original project included three main components:
+![Embedded grid algorithm excerpt](docs/assets/figures/grid-neighborhood.png)
 
-**Perception and Localization**
+*Archival thesis excerpt illustrating grid-neighborhood calculations.*
 
-An external camera and ArUco markers were used to estimate the robot's position relative to reference markers. Ultrasonic sensing supported obstacle detection.
+## Source code and thesis
 
-**Navigation and Path Planning**
+- [Arduino / C++ navigation and motor control](legacy/arduino/autonomous_carry_robot.ino)
+- [Python / OpenCV calibration and localization](legacy/python/aruco_localization.py)
+- [MATLAB known-map planning](legacy/matlab/path_planning/path_planning_known_map.m)
+- [MATLAB LiDAR SLAM simulation](legacy/matlab/simulations/lidar_slam_simulation.m)
+- [Full original thesis (PDF)](docs/thesis/Autonomous_Carry_Robot_Thesis_2021.pdf)
 
-An Adaptive Wavefront algorithm operated on a grid-based representation of the environment, supporting path selection and obstacle updates.
+## Historical validation status
 
-**Motion Control**
+The original academic project was completed in 2021. The current repository is a **documentation and archival reconstruction**, not a fully reproducible modern robotics stack. In particular, the Python transcript has formatting errors; MATLAB scripts may require original datasets, toolboxes and helpers; and Arduino code has not been recompiled or tested against current hardware. Thesis images are archival page captures, not new simulation output.
 
-An Arduino Uno controlled the robot's movement using a motor driver and DC motors.
+## Future engineering roadmap
 
-## Technologies
+1. Restore and validate archival sources without changing their provenance.
+2. Implement an independently testable Python grid-navigation module with unit tests and visual demos.
+3. Add camera-calibration and ArUco sample data with reproducible validation.
+4. Explore ROS 2 simulation and integration as a **new** development track.
 
-| Area | Technologies |
-|---|---|
-| Embedded Systems | Arduino Uno, C/C++ |
-| Computer Vision | Python, OpenCV, ArUco |
-| Path Planning | Adaptive Wavefront, PRM |
-| Simulation | MATLAB |
-| Mapping Research | LiDAR SLAM |
-| Hardware | HC-SR04, L298 motor driver, DC motors |
+## Attribution
 
-## Repository Structure
-
-```text
-autonomous-carry-robot/
-├── docs/
-│   └── thesis/
-│       └── Autonomous_Carry_Robot_Thesis_2021.pdf
-├── legacy/
-│   ├── arduino/
-│   │   └── autonomous_carry_robot.ino
-│   ├── python/
-│   │   └── aruco_localization.py
-│   └── matlab/
-│       ├── path_planning/
-│       │   └── path_planning_known_map.m
-│       └── simulations/
-│           └── lidar_slam_simulation.m
-├── src/
-│   └── carry_robot/
-├── tests/
-├── pyproject.toml
-└── README.md
-```
-
-## Original Research and Implementation
-
-The 2021 project included a physical mobile robot prototype, Arduino-based motion control, ultrasonic obstacle sensing, camera-based ArUco localization, and Adaptive Wavefront navigation.
-
-MATLAB was used separately to investigate path planning and LiDAR SLAM techniques in simulation.
-
-The original thesis is available under `docs/thesis/`.
-
-### Legacy Source Code
-
-The source files under `legacy/` were reconstructed from code listings included in the 2021 thesis.
-
-They are preserved for historical reference and have not been fully validated, compiled, or tested in the current development environment.
-
-They should not be treated as production-ready implementations.
-
-## Modernization Roadmap
-
-Future development is planned to include:
-
-- Reimplementing navigation algorithms in modern Python
-- Adding automated unit and integration tests
-- Building reproducible robotics simulations
-- Exploring ROS 2 integration
-- Improving software architecture and documentation
-
-These improvements are planned work and are not presented as completed features.
-
-## Contributors
-
-**Original Senior Design Project — MEF University, 2021**
-
-- Yiğit Atik
-- Ziya Oğuzhan Çevik
-
-**Academic Advisor:** Dr. Yusuf Aydın
-
-## Project Status
-
-**Original academic project:** Completed in 2021.
-
-**Legacy source archival:** Completed, pending further validation.
-
-**Modern Python / ROS 2 development:** Planned.
+Original senior design work: **Yiğit Atik and Ziya Oğuzhan Çevik**, MEF University, 2021. Academic advisor: **Dr. Yusuf Aydın**. MATLAB/OpenCV/Arduino libraries and APIs remain the work of their respective authors.

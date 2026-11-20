@@ -12,3 +12,7 @@ htmlcov/
 *.egg-info/
 build/
 dist/
+
+# Temporary thesis page renderings / review sheets
+docs/assets/thesis-pages/
+docs/assets/hardware/
